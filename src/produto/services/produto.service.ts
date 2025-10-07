@@ -40,26 +40,11 @@ export class ProdutoService {
   }
 
   async create(produto: Produto): Promise<Produto> {
-    // Garante que o produto tenha uma categoria válida antes de salvar
-    if (!produto.categoria || !produto.categoria.id) {
-      throw new HttpException(
-        'A categoria do produto é obrigatória.',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     return await this.produtoRepository.save(produto);
   }
 
   async update(produto: Produto): Promise<Produto> {
     await this.findById(produto.id);
-
-    if (produto.categoria && !produto.categoria.id) {
-      throw new HttpException(
-        'A categoria do produto é obrigatória.',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
 
     return await this.produtoRepository.save(produto);
   }
